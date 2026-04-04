@@ -1,8 +1,10 @@
 import '../css/app.css';
 
+import { PwaInstallBanner } from '@/components/pwa-install-banner';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
+import { Fragment } from 'react';
 import { route as routeFn } from 'ziggy-js';
 import { initializeTheme } from './hooks/use-appearance';
 
@@ -18,7 +20,12 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<App {...props} />);
+        root.render(
+            <Fragment>
+                <PwaInstallBanner />
+                <App {...props} />
+            </Fragment>,
+        );
     },
     progress: {
         color: '#4B5563',
@@ -27,3 +34,12 @@ createInertiaApp({
 
 // This will set light / dark mode on load...
 initializeTheme();
+
+// PWA: instalación en Chrome/Android e iOS (Safari «Añadir a inicio»). Solo en build de producción.
+if (import.meta.env.PROD && typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {
+            // HTTPS obligatorio en producción; en HTTP local el SW no aplica.
+        });
+    });
+}

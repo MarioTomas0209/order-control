@@ -7,7 +7,7 @@ export default function Welcome() {
 
     return (
         <div className="dark:bg-background dark:text-foreground bg-[#F9FAFB] text-gray-900">
-            <Head title="Control de Repartos" />
+            <Head title="SaaS" />
 
             <header className="dark:border-border dark:bg-background/80 border-b border-gray-200/80 bg-white/80 backdrop-blur">
                 <div className="mx-auto flex max-w-3xl flex-col gap-3 px-4 py-3 sm:h-14 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:py-0">
@@ -15,7 +15,7 @@ export default function Welcome() {
                         <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-sky-100 dark:bg-sky-950/50">
                             <Truck className="size-5 text-sky-700 dark:text-sky-400" strokeWidth={2} />
                         </div>
-                        <span className="text-sm leading-tight font-semibold tracking-tight sm:text-base sm:leading-none">Control de Repartos</span>
+                        <span className="text-sm leading-tight font-semibold tracking-tight sm:text-base sm:leading-none">SaaS</span>
                     </Link>
                     <nav className="flex w-full min-w-0 gap-2 text-sm sm:w-auto sm:shrink-0 sm:justify-end">
                         {auth.user ? (
@@ -49,7 +49,7 @@ export default function Welcome() {
             <main className="mx-auto max-w-3xl px-4 py-12 sm:py-16">
                 <section className="text-center">
                     <h1 className="text-primary mb-3 text-3xl font-bold tracking-tight sm:text-4xl">Para repartidores</h1>
-                    <img src="/images/img-8.jpg" alt="Control de Repartos" className="h-auto w-full rounded-xl" />
+                    <img src="/images/img-8.jpg" alt="SaaS" className="h-auto w-full rounded-xl" />
                     {!auth.user ? (
                         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                             <Link
@@ -71,7 +71,7 @@ export default function Welcome() {
             </main>
 
             <footer className="dark:border-border dark:text-muted-foreground border-t border-gray-200 py-8 text-center text-sm text-gray-500">
-                <p className="mb-4">Control de Repartos · {new Date().getFullYear()}</p>
+                <p className="mb-4">SaaS · {new Date().getFullYear()}</p>
                 <div className="flex flex-wrap items-center justify-center gap-5">
                     <a
                         href="https://www.facebook.com/marioadolfo.tomas"

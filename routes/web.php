@@ -5,11 +5,49 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\WorkSessionController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
+
+/** Manifiesto PWA (Chrome: «Instalar aplicación»). */
+Route::get('/manifest.webmanifest', function () {
+    $name = config('app.name', 'Laravel');
+
+    return response()->json([
+        'name' => $name,
+        'short_name' => Str::limit($name, 12, ''),
+        'description' => 'Control de pedidos y repartos',
+        'start_url' => '/',
+        'scope' => '/',
+        'display' => 'standalone',
+        'orientation' => 'portrait-primary',
+        'background_color' => '#ffffff',
+        'theme_color' => '#0ea5e9',
+        'icons' => [
+            [
+                'src' => '/pwa-192.png',
+                'sizes' => '192x192',
+                'type' => 'image/png',
+                'purpose' => 'any',
+            ],
+            [
+                'src' => '/pwa-512.png',
+                'sizes' => '512x512',
+                'type' => 'image/png',
+                'purpose' => 'any',
+            ],
+            [
+                'src' => '/pwa-512.png',
+                'sizes' => '512x512',
+                'type' => 'image/png',
+                'purpose' => 'maskable',
+            ],
+        ],
+    ], 200, ['Content-Type' => 'application/manifest+json'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+})->name('pwa.manifest');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');

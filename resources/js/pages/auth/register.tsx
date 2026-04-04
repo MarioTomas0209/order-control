@@ -36,7 +36,7 @@ export default function Register() {
                     >
                         <Truck className="size-8 text-sky-700 dark:text-sky-400" strokeWidth={2} />
                     </div>
-                    <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-foreground">Control de Repartos</h1>
+                    <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-foreground">SaaS</h1>
                 </div>
 
                 <form className="flex flex-col gap-6" onSubmit={submit}>

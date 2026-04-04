@@ -40,7 +40,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     >
                         <Truck className="size-8 text-sky-700 dark:text-sky-400" strokeWidth={2} />
                     </div>
-                    <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-foreground">Control de Repartos</h1>
+                    <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-foreground">SaaS</h1>
                     <p className="text-muted-foreground mt-2 max-w-sm text-sm leading-relaxed">
                         Ingresa tu correo y contraseña para continuar.
                     </p>
