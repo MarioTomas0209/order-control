@@ -41,7 +41,7 @@ class DashboardController extends Controller
                     'delivery_cost' => (float) $s->delivery_cost,
                     'total_cost' => (float) $s->total_cost,
                     'payment_label' => $s->payment_type->label(),
-                    'time_label' => $s->created_at->copy()->timezone($displayTz)->format('H:i'),
+                    'time_label' => $s->created_at->copy()->timezone($displayTz)->format('g:i a'),
                     'notes' => $s->notes,
                     'order_lines' => $s->order_lines ?? [],
                 ])

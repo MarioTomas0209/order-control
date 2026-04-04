@@ -7,6 +7,7 @@ import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { authFieldClass, authLabelClass } from '@/lib/auth-form-styles';
+import AppLogoIcon from '@/components/app-logo-icon';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -34,7 +35,7 @@ export default function Register() {
                         className="mb-5 flex size-14 items-center justify-center rounded-2xl bg-sky-100 dark:bg-sky-950/50"
                         aria-hidden
                     >
-                        <Truck className="size-8 text-sky-700 dark:text-sky-400" strokeWidth={2} />
+                        <AppLogoIcon />
                     </div>
                     <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-foreground">SaaS</h1>
                 </div>

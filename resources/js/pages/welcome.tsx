@@ -1,3 +1,4 @@
+import AppLogoIcon from '@/components/app-logo-icon';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { ArrowRight, Facebook, Instagram, Phone, Truck } from 'lucide-react';
@@ -13,7 +14,7 @@ export default function Welcome() {
                 <div className="mx-auto flex max-w-3xl flex-col gap-3 px-4 py-3 sm:h-14 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:py-0">
                     <Link href={route('home')} className="flex min-w-0 shrink items-center gap-2.5 sm:min-h-0">
                         <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-sky-100 dark:bg-sky-950/50">
-                            <Truck className="size-5 text-sky-700 dark:text-sky-400" strokeWidth={2} />
+                            <AppLogoIcon />
                         </div>
                         <span className="text-sm leading-tight font-semibold tracking-tight sm:text-base sm:leading-none">SaaS</span>
                     </Link>

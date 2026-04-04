@@ -105,7 +105,7 @@ class HistoryController extends Controller
                 'payment_type' => $svc->payment_type->value,
                 'payment_label' => $svc->payment_type->label(),
                 'notes' => $svc->notes,
-                'time_label' => $svc->created_at->copy()->timezone($tz)->format('d/m/Y H:i'),
+                'time_label' => $svc->created_at->copy()->timezone($tz)->format('d/m/Y g:i a'),
                 'is_cancelled' => $svc->status === ServiceStatus::Cancelled,
                 'order_lines' => $svc->order_lines ?? [],
             ]),
@@ -118,8 +118,8 @@ class HistoryController extends Controller
             return '—';
         }
 
-        $startLabel = $start->copy()->timezone($tz)->format('d/m/Y H:i');
-        $endLabel = $end !== null ? $end->copy()->timezone($tz)->format('d/m/Y H:i') : '—';
+        $startLabel = $start->copy()->timezone($tz)->format('d/m/Y g:i a');
+        $endLabel = $end !== null ? $end->copy()->timezone($tz)->format('d/m/Y g:i a') : '—';
 
         return $startLabel.' – '.$endLabel;
     }
