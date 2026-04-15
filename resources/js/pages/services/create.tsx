@@ -41,6 +41,7 @@ const PAYMENT_OPTIONS = [
     { value: 'transfer', label: 'Transferencia' },
     { value: 'card', label: 'Tarjeta' },
 ] as const;
+const CASH_SHORTCUTS = [50, 100, 200, 500, 1000] as const;
 
 /** Mensajes que pide la base; solo referencia para copiar y pegar. */
 const BASE_MESSAGES = {
@@ -79,6 +80,7 @@ export default function ServicesCreate() {
     const [baseStep3Done, setBaseStep3Done] = useState(false);
     const [copyFeedback, setCopyFeedback] = useState<CopyFeedbackId | null>(null);
     const [serviceTab, setServiceTab] = useState<'amounts' | 'base'>('amounts');
+    const [customerPaidAmount, setCustomerPaidAmount] = useState('');
 
     const copyBaseLine = async (text: string, id: CopyFeedbackId) => {
         const ok = await copyPlainText(text);
@@ -186,6 +188,8 @@ export default function ServicesCreate() {
     const deliveryNum = useMemo(() => parseAmountInput(String(form.data.delivery_cost)), [form.data.delivery_cost]);
 
     const totalPreview = useMemo(() => Math.round((orderNum + deliveryNum) * 100) / 100, [orderNum, deliveryNum]);
+    const customerPaidNum = useMemo(() => parseAmountInput(customerPaidAmount), [customerPaidAmount]);
+    const paymentDelta = useMemo(() => Math.round((customerPaidNum - totalPreview) * 100) / 100, [customerPaidNum, totalPreview]);
 
     useEffect(() => {
         if (!linesDriveOrder) {
@@ -440,6 +444,54 @@ export default function ServicesCreate() {
                                         </div>
 
                                         <div className="grid gap-2">
+                                            <Label htmlFor="customer_paid_amount">Me paga con</Label>
+                                            <Input
+                                                id="customer_paid_amount"
+                                                type="number"
+                                                inputMode="decimal"
+                                                min={0}
+                                                step="0.01"
+                                                placeholder="0.00"
+                                                value={customerPaidAmount}
+                                                onChange={(e) => setCustomerPaidAmount(e.target.value)}
+                                                autoComplete="off"
+                                            />
+                                            <div className="flex flex-wrap gap-2">
+                                                {CASH_SHORTCUTS.map((amount) => (
+                                                    <Button
+                                                        key={amount}
+                                                        type="button"
+                                                        variant="outline"
+                                                        size="sm"
+                                                        className="h-8 rounded-md px-3 text-xs"
+                                                        onClick={() => setCustomerPaidAmount(String(amount))}
+                                                    >
+                                                        {formatMxn(amount)}
+                                                    </Button>
+                                                ))}
+                                            </div>
+                                            {customerPaidAmount.trim() !== '' ? (
+                                                <p className="text-xs">
+                                                    {paymentDelta > 0 ? (
+                                                        <>
+                                                            Cambio a devolver: <span className="font-semibold tabular-nums">{formatMxn(paymentDelta)}</span>
+                                                        </>
+                                                    ) : paymentDelta < 0 ? (
+                                                        <>
+                                                            Falta cobrar: <span className="font-semibold tabular-nums">{formatMxn(Math.abs(paymentDelta))}</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            Pago exacto: <span className="font-semibold tabular-nums">{formatMxn(0)}</span>
+                                                        </>
+                                                    )}
+                                                </p>
+                                            ) : (
+                                                <p className="text-muted-foreground text-xs">Solo como ayuda visual. No se guarda en el servicio.</p>
+                                            )}
+                                        </div>
+
+                                        <div className="grid gap-2">
                                             <span className="text-sm leading-none font-medium">Tipo de pago</span>
                                             <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                                                 {PAYMENT_OPTIONS.map((opt) => (
@@ -468,7 +520,7 @@ export default function ServicesCreate() {
                                         </div>
 
                                         <div className="grid gap-2">
-                                            <Label htmlFor="notes">Notas (opcional)</Label>
+                                            <Label htmlFor="notes">Notas</Label>
                                             <textarea
                                                 id="notes"
                                                 rows={3}
