@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use App\Enums\UserStatus;
+use Database\Factories\UserFactory;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory, MustVerifyEmail, Notifiable;
 
     /**
@@ -71,5 +72,13 @@ class User extends Authenticatable implements MustVerifyEmailContract
     public function sessionEvents(): HasMany
     {
         return $this->hasMany(SessionEvent::class);
+    }
+
+    /**
+     * @return HasMany<Place, $this>
+     */
+    public function placesCreated(): HasMany
+    {
+        return $this->hasMany(Place::class, 'created_by');
     }
 }

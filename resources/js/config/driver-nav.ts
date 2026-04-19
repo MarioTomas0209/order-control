@@ -1,4 +1,4 @@
-import { type LucideIcon, Clock, LayoutGrid } from 'lucide-react';
+import { type LucideIcon, Clock, LayoutGrid, MapPin } from 'lucide-react';
 
 export type DriverNavItem = {
     title: string;
@@ -13,4 +13,5 @@ export type DriverNavItem = {
 export const driverNavItems: DriverNavItem[] = [
     { title: 'Inicio', href: '/dashboard', icon: LayoutGrid },
     { title: 'Historial', href: '/history', icon: Clock },
+    { title: 'Locales', href: '/places', icon: MapPin },
 ];

@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\PlaceController as ApiPlaceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\PlaceRejectedNotificationDismissController;
+use App\Http\Controllers\PlaceViewController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkSessionController;
@@ -68,6 +71,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('services/{service}/cancel', [ServiceController::class, 'cancel'])->name('services.cancel');
 
     Route::resource('users', UserController::class)->except(['show']);
+
+    Route::get('places', [PlaceViewController::class, 'index'])->name('places.index');
+    Route::get('places/create', [PlaceViewController::class, 'create'])->name('places.create');
+    Route::get('places/{place}/edit', [PlaceViewController::class, 'edit'])->name('places.edit');
+
+    Route::post('notifications/place-rejected/dismiss', PlaceRejectedNotificationDismissController::class)->name('notifications.place-rejected.dismiss');
+
+    Route::prefix('api')->name('api.')->group(function () {
+        Route::get('places/search', [ApiPlaceController::class, 'search'])->name('places.search');
+        Route::get('places/pending', [ApiPlaceController::class, 'pending'])->name('places.pending');
+        Route::get('places/categories', [ApiPlaceController::class, 'categories'])->name('places.categories');
+        Route::get('places', [ApiPlaceController::class, 'index'])->name('places.index');
+        Route::post('places', [ApiPlaceController::class, 'store'])->name('places.store');
+        Route::patch('places/{place}', [ApiPlaceController::class, 'update'])->name('places.update');
+        Route::post('places/{place}/approve', [ApiPlaceController::class, 'approve'])->name('places.approve');
+        Route::post('places/{place}/reject', [ApiPlaceController::class, 'reject'])->name('places.reject');
+    });
 });
 
 require __DIR__.'/settings.php';

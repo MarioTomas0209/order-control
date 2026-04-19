@@ -3,7 +3,10 @@
 namespace App\Http\Middleware;
 
 use App\Enums\BaseReportStatus;
+use App\Enums\UserRole;
 use App\Models\WorkSession;
+use App\Notifications\PlacePendingSuggestionNotification;
+use App\Notifications\PlaceSuggestionRejectedNotification;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -41,6 +44,7 @@ class HandleInertiaRequests extends Middleware
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
         return array_merge(parent::share($request), [
+            'csrf_token' => csrf_token(),
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'flash' => [
@@ -55,6 +59,12 @@ class HandleInertiaRequests extends Middleware
                     ->where('status', 'finished')
                     ->where('base_report_status', '!=', BaseReportStatus::Reconciled->value)
                     ->count()
+                : 0,
+            'pendingPlaceSuggestionNotificationsCount' => $request->user() !== null && $request->user()->role === UserRole::Admin
+                ? $request->user()->unreadNotifications()->where('type', PlacePendingSuggestionNotification::class)->count()
+                : 0,
+            'unreadPlaceRejectedNotificationsCount' => $request->user() !== null && $request->user()->role === UserRole::Driver
+                ? $request->user()->unreadNotifications()->where('type', PlaceSuggestionRejectedNotification::class)->count()
                 : 0,
         ]);
     }

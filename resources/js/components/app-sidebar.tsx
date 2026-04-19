@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Clock, LayoutGrid, Users } from 'lucide-react';
+import { Clock, LayoutGrid, MapPin, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const footerNavItems: NavItem[] = [
@@ -21,7 +21,8 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
-    const { pendingBaseReportCount, auth } = usePage<SharedData>().props;
+    const { pendingBaseReportCount, pendingPlaceSuggestionNotificationsCount, unreadPlaceRejectedNotificationsCount, auth } =
+        usePage<SharedData>().props;
 
     const mainNavItems: NavItem[] = [
         {
@@ -34,6 +35,14 @@ export function AppSidebar() {
             url: '/history',
             icon: Clock,
             notificationDot: pendingBaseReportCount > 0,
+        },
+        {
+            title: 'Locales',
+            url: '/places',
+            icon: MapPin,
+            notificationDot:
+                (auth.user.role === 'admin' && pendingPlaceSuggestionNotificationsCount > 0) ||
+                (auth.user.role === 'driver' && (unreadPlaceRejectedNotificationsCount ?? 0) > 0),
         },
         ...(auth.user.role === 'admin'
             ? [
