@@ -5,8 +5,8 @@ import { Link, usePage } from '@inertiajs/react';
 
 export function DriverBottomNav() {
     const page = usePage<SharedData>();
-    const { url } = page;
-    const pendingBaseReportCount = page.props.pendingBaseReportCount ?? 0;
+    const { url, props } = page;
+    const pendingBaseReportCount = props.pendingBaseReportCount ?? 0;
 
     return (
         <nav
@@ -16,11 +16,7 @@ export function DriverBottomNav() {
             <div className="mx-auto flex max-w-lg items-stretch justify-around gap-1 px-2 pt-1">
                 {driverNavItems.map((item) => {
                     const isActive =
-                        item.href === '/dashboard'
-                            ? url === '/dashboard'
-                            : item.href.startsWith('/settings')
-                              ? url.startsWith('/settings')
-                              : url.startsWith(item.href);
+                        item.href === '/dashboard' ? url === '/dashboard' : item.href === '/history' && url.startsWith('/history');
 
                     return (
                         <Link

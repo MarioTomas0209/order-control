@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Clock, LayoutGrid } from 'lucide-react';
+import { Clock, LayoutGrid, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const footerNavItems: NavItem[] = [
@@ -21,7 +21,7 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
-    const { pendingBaseReportCount } = usePage<SharedData>().props;
+    const { pendingBaseReportCount, auth } = usePage<SharedData>().props;
 
     const mainNavItems: NavItem[] = [
         {
@@ -35,6 +35,15 @@ export function AppSidebar() {
             icon: Clock,
             notificationDot: pendingBaseReportCount > 0,
         },
+        ...(auth.user.role === 'admin'
+            ? [
+                  {
+                      title: 'Usuarios',
+                      url: '/users',
+                      icon: Users,
+                  } satisfies NavItem,
+              ]
+            : []),
     ];
 
     return (

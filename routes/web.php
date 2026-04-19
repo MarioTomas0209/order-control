@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkSessionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -65,6 +66,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('services/{service}/edit', [ServiceController::class, 'edit'])->name('services.edit');
     Route::patch('services/{service}', [ServiceController::class, 'update'])->name('services.update');
     Route::post('services/{service}/cancel', [ServiceController::class, 'cancel'])->name('services.cancel');
+
+    Route::resource('users', UserController::class)->except(['show']);
 });
 
 require __DIR__.'/settings.php';

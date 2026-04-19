@@ -429,7 +429,7 @@ export default function ServicesCreate() {
                                         >
                                             <div>
                                                 <span className="text-muted-foreground">Total (pedido + envío): </span>
-                                                <span className="font-semibold tabular-nums">{formattedTotal}</span>
+                                                <span className="font-semibold tabular-nums text-2xl text-primary">{formattedTotal}</span>
                                             </div>
                                             <Button
                                                 type="button"
@@ -474,15 +474,15 @@ export default function ServicesCreate() {
                                                 <p className="text-xs">
                                                     {paymentDelta > 0 ? (
                                                         <>
-                                                            Cambio a devolver: <span className="font-semibold tabular-nums">{formatMxn(paymentDelta)}</span>
+                                                            Cambio a devolver: <span className="font-semibold tabular-nums text-2xl text-red-500">{formatMxn(paymentDelta)}</span>
                                                         </>
                                                     ) : paymentDelta < 0 ? (
                                                         <>
-                                                            Falta cobrar: <span className="font-semibold tabular-nums">{formatMxn(Math.abs(paymentDelta))}</span>
+                                                            Falta cobrar: <span className="font-semibold tabular-nums text-2xl text-red-500">{formatMxn(Math.abs(paymentDelta))}</span>
                                                         </>
                                                     ) : (
                                                         <>
-                                                            Pago exacto: <span className="font-semibold tabular-nums">{formatMxn(0)}</span>
+                                                            Pago exacto: <span className="font-semibold tabular-nums text-2xl text-green-500">{formatMxn(0)}</span>
                                                         </>
                                                     )}
                                                 </p>

@@ -212,7 +212,7 @@ export default function Dashboard() {
                             ) : (
                                 <Button
                                     variant="secondary"
-                                    className="bg-muted text-foreground hover:bg-muted/80 h-12 rounded-xl text-base"
+                                    className="bg-muted text-foreground hover:bg-muted/80 h-12 rounded-xl text-base hidden"
                                     size="lg"
                                     type="button"
                                     disabled={processing}

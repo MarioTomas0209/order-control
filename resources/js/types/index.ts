@@ -28,14 +28,32 @@ export interface SharedData {
     quote: { message: string; author: string };
     auth: Auth;
     pendingBaseReportCount: number;
+    flash?: {
+        success?: string | null;
+    };
     [key: string]: unknown;
 }
+
+/** Fila de usuario en administración (listado / edición). */
+export type ManagedUserRow = {
+    id: number;
+    name: string;
+    email: string;
+    phone: string | null;
+    role: string;
+    role_label: string;
+    status: string;
+    status_label: string;
+};
 
 export interface User {
     id: number;
     name: string;
     email: string;
     avatar?: string;
+    phone?: string | null;
+    role: 'admin' | 'driver';
+    status?: 'active' | 'inactive';
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
