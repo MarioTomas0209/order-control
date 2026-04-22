@@ -112,8 +112,7 @@ export default function Dashboard() {
     };
 
     const copyRowAmounts = async (row: SessionServiceRow) => {
-        const lines = row.order_lines?.length ? row.order_lines : null;
-        const ok = await copyServiceAmountsToClipboard(row.order_cost, row.delivery_cost, row.total_cost, lines);
+        const ok = await copyServiceAmountsToClipboard(row.total_cost);
         if (ok) {
             setCopiedServiceId(row.id);
             window.setTimeout(() => setCopiedServiceId(null), 2000);
@@ -325,7 +324,7 @@ export default function Dashboard() {
                                                             onClick={() => copyRowAmounts(row)}
                                                         >
                                                             <Copy className="size-3.5" />
-                                                            {copiedServiceId === row.id ? 'Copiado' : 'Copiar montos'}
+                                                            {copiedServiceId === row.id ? 'Copiado' : 'Copiar total'}
                                                         </Button>
                                                         {activeWorkSession.on_break ? null : (
                                                             <>

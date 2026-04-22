@@ -232,9 +232,7 @@ export default function ServicesCreate() {
     const formattedTotal = formatMxn(totalPreview);
 
     const handleCopyAmounts = async () => {
-        const cleaned = cleanOrderLinesForSubmit(form.data.order_lines);
-        const orderForCopy = cleaned.length > 0 ? cleaned.reduce((s, r) => s + r.amount, 0) : parseAmountInput(String(form.data.order_cost));
-        const ok = await copyServiceAmountsToClipboard(orderForCopy, deliveryNum, totalPreview, cleaned.length > 0 ? cleaned : null);
+        const ok = await copyServiceAmountsToClipboard(totalPreview);
         if (ok) {
             setAmountsCopied(true);
             window.setTimeout(() => setAmountsCopied(false), 2000);
@@ -439,7 +437,7 @@ export default function ServicesCreate() {
                                                 onClick={handleCopyAmounts}
                                             >
                                                 <Copy className="size-3.5" />
-                                                {amountsCopied ? 'Copiado' : 'Copiar montos'}
+                                                {amountsCopied ? 'Copiado' : 'Copiar total'}
                                             </Button>
                                         </div>
 
